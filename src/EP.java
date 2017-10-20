@@ -14,7 +14,7 @@ public class EP {
         FileReader fr;
 
         try{
-            fr = new FileReader("bd.txt");
+            fr = new FileReader("../bd.txt");
             br = new BufferedReader(fr);
             
             String currentLine;
