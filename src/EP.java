@@ -43,6 +43,10 @@ public class EP {
         //RODANDO AS THREADS
         for (int i = 0; i < 100; i++) {
             threadsArray[i].start();
+
+            try{
+                threadsArray[i].sleep(1);
+            }catch(InterruptedException e){}
         }
 
         //IMPRIME TODAS AS LINHAS.
