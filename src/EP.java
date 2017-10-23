@@ -13,7 +13,6 @@ public class EP {
         BufferedReader br;
         FileReader fr;
         String[] lines = new String[36242];
-        int[] mutex = new int[36242];
 
         try{
             fr = new FileReader("../bd.txt");
@@ -37,8 +36,8 @@ public class EP {
         Thread[] threadsArray = new Thread[100];
         for (int i = 0; i < 100; i++) {
             double decide = Math.random();
-            if(decide>0.5) threadsArray[i] = new MyThread(new Reader(lines, mutex), "reader");
-            else threadsArray[i] = new MyThread(new Writer(lines, mutex), "writer");
+            if(decide>0.5) threadsArray[i] = new MyThread(new Reader(lines), "reader");
+            else threadsArray[i] = new MyThread(new Writer(lines), "writer");
         }
 
         //RODANDO AS THREADS
@@ -61,7 +60,6 @@ public class EP {
 class Reader implements Runnable{
 
     String[] lines;
-    int[] mutex;
     /**
      * No PDF: "Se o objeto for um leitor, ele deve somente ler a palavra na posição desejada,
      * armazenando-a em alguma variável local..."
@@ -69,55 +67,30 @@ class Reader implements Runnable{
      */
     String read;
 
-    Reader(String[] lines, int[] mutex){
+    Reader(String[] lines){
         this.lines = lines;
-        this.mutex = mutex;
     }
 
     public void run(){
         for (int i = 0; i < 100; i++) {
             int index = (int) (Math.random() * 36242);
-
-            while(mutex[index] == 1){
-                try {
-                    System.out.println("==========================================================================================");
-                    Thread.currentThread().sleep(1);    
-                } catch (InterruptedException e) {
-                    //TODO: handle exception
-                }
-            }
-            mutex[index] = 1;
             this.read = this.lines[index];
-            mutex[index] = 0;
         }
     }
 }
 
 class Writer implements Runnable{
 
-    int[] mutex;
     String[] lines;
 
-    Writer(String[] lines, int[] mutex){
+    Writer(String[] lines){
         this.lines = lines;
-        this.mutex = mutex;
     }
 
     public void run(){
         for (int i = 0; i < 100; i++) {
             int index = (int) (Math.random()*36242);
-
-            while(mutex[index] == 1){
-                try {
-                    System.out.println("==========================================================================================");
-                    Thread.currentThread().sleep(1);    
-                } catch (InterruptedException e) {
-                    //TODO: handle exception
-                }
-            }
-            mutex[index] = 1;
             this.lines[index] = "MODIFICADO";
-            mutex[index] = 0;
         }
     }
 }
