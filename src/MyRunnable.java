@@ -20,9 +20,11 @@ class Reader extends MyRunnable{
     }
 
     public void run(){
-        for (int i = 0; i < 100; i++) {
-            int index = (int) (Math.random() * 36242);
-            this.read = this.lines[index];
+        synchronized(lines){
+            for (int i = 0; i < 100; i++) {
+                int index = (int) (Math.random() * 36242);
+                this.read = this.lines[index];
+            }
         }
     }
 }
@@ -36,9 +38,12 @@ class Writer extends MyRunnable{
     }
 
     public void run(){
-        for (int i = 0; i < 100; i++) {
-            int index = (int) (Math.random()*36242);
-            this.lines[index] = "MODIFICADO";
+
+        synchronized(lines){
+            for (int i = 0; i < 100; i++) {
+                int index = (int) (Math.random()*36242);
+                this.lines[index] = "MODIFICADO";
+            }
         }
     }
 }
