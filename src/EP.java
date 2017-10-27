@@ -49,9 +49,11 @@ public class EP {
         }
 
         //IMPRIME TODAS AS LINHAS.
+        String output = new String();
         for (int i = 0; i < lines.length; i++) {
-            System.out.println(lines[i]);
+            output = output.concat(lines[i] + "\n");
         }
+        System.out.println(output);
 
     }
 }
