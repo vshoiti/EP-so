@@ -2,7 +2,7 @@ public abstract class MyRunnable implements Runnable{
 
     String[] lines;
 
-    publoc void run();
+    public abstract void run();
 }
 
 class Reader extends MyRunnable{
